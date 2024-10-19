@@ -7,12 +7,12 @@ import (
 )
 
 type Task struct {
-	ID           string // Unique task identifier
-	SourceCode   string // Path to the source code file
-	InputFile    string // Path to the input file
-	OutputFile   string // Path to the output file (where results will be written)
-	LanguageID   string // ID of the language (e.g., "cpp", "python")
-	ExecuteCmd   string // Command to execute the code in sandbox
+	ID         string // Unique task identifier
+	SourceCode string // Path to the source code file
+	Input      string // Path to the input file
+	Output     string // Path to the output file (where results will be written)
+	LanguageID string // ID of the language (e.g., "cpp", "python")
+	ExecuteCmd string // Command to execute the code in sandbox
 }
 
 // NewTask creates a new task with the provided details.
@@ -20,8 +20,8 @@ func NewTask(id, source, input, output, langID, cmd string) *Task {
 	return &Task{
 		ID:         id,
 		SourceCode: source,
-		InputFile:  input,
-		OutputFile: output,
+		Input:      input,
+		Output:     "",
 		LanguageID: langID,
 		ExecuteCmd: cmd,
 	}
