@@ -17,20 +17,28 @@ RUN apt-get update && apt-get install -y \
 # Clone the isolate repository from GitHub
 RUN git clone https://github.com/ioi/isolate.git /opt/isolate
 
-# Build and install isolate
-RUN make && make install
-
 # Clean up APT cache to reduce image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY . /worker
 
 # Set working directory to the isolate folder
-WORKDIR /worker
+WORKDIR /opt/isolate
+
+# Build and install isolate
+RUN make && make install
+
+# Copy Go code and related files from the current directory on the host into /app inside the container
+COPY . /app
+
+# Change working directory to where the Go code is located
+WORKDIR /app
+
+# Ensure proper permissions for the Go app
+RUN chmod -R 755 /app
 
 # Set entrypoint for isolate command (optional)
 ENTRYPOINT ["go"]
 
 # Default command (optional)
-CMD ["run","main.go"]
+CMD ["run","./main.go"]
 
